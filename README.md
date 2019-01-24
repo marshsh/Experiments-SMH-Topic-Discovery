@@ -6,6 +6,7 @@ Install dependencies (use `sudo` for system-wide installation):
 
 ~~~~	
 pip install sklearn nltk
+pip install -U gensim
 ~~~~
 
 Download NLTK's required resources by doing:
