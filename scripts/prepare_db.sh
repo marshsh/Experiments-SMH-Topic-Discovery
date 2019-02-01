@@ -14,7 +14,7 @@ REUTERS=false
 WIKIPEDIA=false
 WIKI2TEXT=false
 
-while getopts ":abrw" opt; do
+while getopts ":abtrw" opt; do
     case $opt in
         a)
             TWENTYNG=true
@@ -26,6 +26,7 @@ while getopts ":abrw" opt; do
             WIKI2TEXT=true
             ;;
         t)
+            # echo "Todo bien"
             TWENTYNG=true
             ;;
         r)
@@ -33,7 +34,7 @@ while getopts ":abrw" opt; do
             ;;
         w)
             WIKIPEDIA=true
-        ;;
+            ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
             exit 1
@@ -118,29 +119,29 @@ fi
 
 if $WIKIPEDIA; then
     echo "Preparing Wikipedia"    
-    # mkdir -p $DATAPATH/wikipedia
+    mkdir -p $DATAPATH/wikipedia
 
-    # if [ ! -f $DATAPATH/wikipedia/wikien.xml.bz2 ]; then
-    #     echo "Downloading Wikipedia dump"
-    #     wget -qO- -O $DATAPATH/wikipedia/wikien.xml.bz2 \
-    #          $WIKIDUMPEN
-    # fi
+    if [ ! -f $DATAPATH/wikipedia/wikien.xml.bz2 ]; then
+        echo "Downloading Wikipedia dump"
+        wget -qO- -O $DATAPATH/wikipedia/wikien.xml.bz2 \
+             $WIKIDUMPEN
+    fi
     
-    # echo "Uncompressing and parsing Wikipedia dump"
-    # bunzip2 -c $DATAPATH/wikipedia/wikien.xml.bz2 \
-    #     | $THIRDPARTYPATH/wiki2text/wiki2text > $DATAPATH/wikipedia/enwiki.txt
+    echo "Uncompressing and parsing Wikipedia dump"
+    bunzip2 -c $DATAPATH/wikipedia/wikien.xml.bz2 \
+        | $THIRDPARTYPATH/wiki2text/wiki2text > $DATAPATH/wikipedia/enwiki.txt
 
-    # echo "Genereting reference text from wikipedia"
-    # python $ROOTPATH/python/corpus/wiki2ref.py \
-	   # $DATAPATH/wikipedia/enwiki.txt \
-	   # $DATAPATH/wikipedia/
+    echo "Genereting reference text from wikipedia"
+    python $ROOTPATH/python/corpus/wiki2ref.py \
+	   $DATAPATH/wikipedia/enwiki.txt \
+	   $DATAPATH/wikipedia/
     
-    # echo "Genereting BOWs from wikipedia reference"
-    # python $ROOTPATH/python/corpus/ref2corpus.py \
-	   # $DATAPATH/wikipedia/enwiki.ref \
-	   # $DATAPATH/stopwords_english.txt \
-	   # $DATAPATH/wikipedia/ \
-	   # -c 1000000
+    echo "Genereting BOWs from wikipedia reference"
+    python $ROOTPATH/python/corpus/ref2corpus.py \
+	   $DATAPATH/wikipedia/enwiki.ref \
+	   $DATAPATH/stopwords_english.txt \
+	   $DATAPATH/wikipedia/ \
+	   -c 1000000
 
     echo "Generating inverted file from corpus"
     smhcmd ifindex $DATAPATH/wikipedia/enwiki1000000.corpus $DATAPATH/wikipedia/enwiki.ifs

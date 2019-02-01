@@ -13,11 +13,11 @@ do
     python python/discovery/smh_topic_discovery.py \
         --tuple_size 2 \
         --cooccurrence_threshold $C \
-        --corpus data/20newsgroups/20newsgroups20000.corpus \
+        --corpus data/20newsgroups/20newsgroups40000.corpus \
         --overlap 0.90 \
         --min_set_size 3 \
-        data/20newsgroups/20newsgroups20000.ifs \
-        data/20newsgroups/20newsgroups20000.vocab \
+        data/20newsgroups/20newsgroups40000.ifs \
+        data/20newsgroups/20newsgroups40000.vocab \
         $1/20newsgroups/
 
     echo "Discovering topics from Reuters with SMH (co-occurrence threshold = $C)"
@@ -38,7 +38,7 @@ do
         --corpus data/wikipedia/enwiki1000000.corpus \
         --overlap 0.90 \
         --min_set_size 3 \
-        data/wikipedia/enwiki1000000.ifs \
+        data/wikipedia/enwiki.ifs \
         data/wikipedia/enwiki1000000.vocab \
         $1/wikipedia/
 
