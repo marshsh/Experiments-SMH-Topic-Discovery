@@ -11,8 +11,8 @@ do
     echo "Discovering $K topics using LDA"
     python python/discovery/lda_topic_discovery.py \
         --number_of_topics K \
-        data/20newsgroups/20newsgroups20000.corpus \
-        data/20newsgroups/20newsgroups20000.vocab \
+        data/20newsgroups/20newsgroups40000.corpus \
+        data/20newsgroups/20newsgroups40000.vocab \
         $1/20newsgroups/
 
     echo "Discovering $K topics using LDA"
